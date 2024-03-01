@@ -1,12 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>ActionItems</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Editor</title>
 </head>
-
 <body>
+    <textarea id="fileContent" rows="10" cols="50"></textarea>
+    <br>
+    <button onclick="loadFile()">Load File</button>
+    <button onclick="saveFile()">Save File</button>
 
-<H1>ActionItems</H1>
-</Table>
+    <script>
+        const fileContentTextarea = document.getElementById('fileContent');
+        const filePath = 'content.txt'; // Adjust the file name if necessary
+
+        function loadFile() {
+            fetch(filePath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to load file.');
+                    }
+                    return response.text();
+                })
+                .then(content => {
+                    fileContentTextarea.value = content;
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        }
+
+        function saveFile() {
+            const content = fileContentTextarea.value;
+            const blob = new Blob([content], { type: 'text/plain' });
+
+            fetch(filePath, {
+                method: 'PUT',
+                body: blob,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to save file.');
+                }
+                alert('File saved successfully!');
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+        }
+    </script>
 </body>
 </html>
