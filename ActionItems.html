@@ -13,10 +13,10 @@
 
     <script>
         const fileContentTextarea = document.getElementById('fileContent');
-        const filePath = 'content.txt'; // Adjust the file name if necessary
+        const filePath = 'ActionItems.txt'; // Adjust the file name if necessary
 
         function loadFile() {
-            fetch(filePath)
+            await fetch(filePath)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Failed to load file.');
